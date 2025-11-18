@@ -1,0 +1,22 @@
+.title {
+  font-size: 32px;
+  font-weight: 700;
+  margin-top: 36px;
+}
+
+.content {
+  display: flex;
+  gap: 32px;
+  margin-top: 32px;
+  margin-bottom: 60px;
+}
+
+.left {
+  width: 380px;
+  height: 540px;
+  flex-shrink: 0;
+}
+
+.right {
+  flex-grow: 1;
+}
