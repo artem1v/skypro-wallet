@@ -1,0 +1,19 @@
+.header {
+	background: $header-bg;
+	&__container {
+		max-width: $breakpoint-xl;
+		margin: 0 auto;
+		height: 64px;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+	&__logo {
+		display: flex;
+		align-items: center;
+	}
+	&__image {
+		width: 100%;
+		max-width: 144px;
+	}
+}
