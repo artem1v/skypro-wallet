@@ -1,0 +1,25 @@
+.expense {
+	max-width: $breakpoint-5xl;
+	margin: 0 auto;
+}
+
+.title {
+	font-size: 32px;
+	font-weight: 700;
+	margin-bottom: 32px;
+	margin-top: 36px;
+	color: $text-color;
+}
+
+.content {
+	display: grid;
+	grid-template-columns: repeat(5, 1fr);
+	grid-template-rows: repeat(5, 1fr);
+	gap: 34px;
+}
+
+@media (min-width: 768px) {
+	.content {
+		grid-template-columns: 1fr 1fr;
+	}
+}
