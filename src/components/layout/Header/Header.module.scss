@@ -2,6 +2,9 @@
 
 .header {
   background: $header-bg;
+  @media (max-width: 672px) {
+    background: $background-color;
+  }
 
   &__container {
     max-width: 1440px;
@@ -36,6 +39,9 @@
     width: 100%;
     max-width: 100px;
   }
+  &__exit {
+    display: none;
+  }
 
   &__btn {
     font-weight: 600;
@@ -61,11 +67,18 @@
   }
 }
 
+.is-active {
+  color: $primary-color;
+  text-decoration: underline;
+}
+.switch__caret {
+  display: none;
+}
 /* ---------- только мобильная версия (ориентир на 375px) ---------- */
-@media (max-width: 480px) {
+@media (max-width: 672px) {
   .header {
     &__container {
-      padding: 0 12px;
+      padding: 0 16px;
       height: 56px;
       gap: 8px;
     }
@@ -77,18 +90,38 @@
 
     /* показываем мобильный переключатель */
     &__switch {
-      display: block;
+      display: flex;
+      align-items: center;
+      gap: 8px;
       flex: 1;
       max-width: 240px;
     }
 
     &__image {
-      max-width: 120px;
+      max-width: 109px;
     }
 
     &__btn {
+      display: none;
       font-size: 13px;
       white-space: nowrap;
+    }
+    &__exit {
+      display: block;
+      font-weight: 600;
+      font-size: 13px;
+      line-height: 170%;
+      text-align: center;
+      color: $text-color;
+      border: none;
+      outline: none;
+      background: transparent;
+      cursor: pointer;
+      transition: color 200ms;
+
+      &:hover {
+        color: $primary-color;
+      }
     }
   }
 
@@ -122,8 +155,8 @@
   .switch__menu {
     position: absolute;
     top: calc(100% + 8px);
-    left: 10px;
-    width: 120%;
+    left: 65px;
+    width: 138px;
     background: #fff;
     border-radius: 6px;
     box-shadow:
@@ -150,6 +183,7 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    text-decoration: none;
 
     &:hover {
       background: rgba(0, 0, 0, 0.04);
