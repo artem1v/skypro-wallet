@@ -3,8 +3,10 @@ import { Layout } from '../components/layout/Layout/Layout'
 
 export const ExpensesPage = () => {
 	return (
-		<Layout>
-			<Expense></Expense>
-		</Layout>
+		<>
+			<Layout>
+				<Expense />
+			</Layout>
+		</>
 	)
 }

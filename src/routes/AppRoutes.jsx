@@ -11,9 +11,10 @@ function AppRoutes() {
 	return (
 		<Routes>
 			<Route element={<PrivateRoute />}>
-				<Route path='/' element={<ExpensesPage />} />
+				<Route path='/' element={<ExpensesPage />}>
+					<Route path='/logout' element={<LogOutPage />} />
+				</Route>
 				<Route path='/spending' element={<SpendingPage />} />
-				<Route path='/logout' element={<LogOutPage />} />
 			</Route>
 			<Route path='/sign-in' element={<SignInPage />} />
 			<Route path='/sign-up' element={<SignUpPage />} />
