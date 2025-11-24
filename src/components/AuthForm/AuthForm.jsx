@@ -2,20 +2,15 @@ import { useContext, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../provider/AuthProvider'
 import { signIn, signUp } from '../../services/auth'
-import styles from '../AuthForm/AuthForm.module.scss'
-//sssss
-const ERROR_MESSAGE =
-	'Упс! Введённые вами данные некорректны. Введите данные корректно и повторите попытку.'
-
-const ACTIVE_BG_COLOR = '#F2EAFF'
-const ACTIVE_BORDER_COLOR = '#7334EA'
+import Button from '../ui/Button/Button'
+import styles from './AuthForm.module.scss'
 
 const AuthForm = ({ isSignUp }) => {
 	const navigate = useNavigate()
-	const [isSubmitted, setIsSubmitted] = useState(false)
-
 	const { updateUserInfo } = useContext(AuthContext)
+
 	const [loading, setLoading] = useState(false)
+	const [isSubmitted, setIsSubmitted] = useState(false)
 
 	const [formData, setFormData] = useState({
 		name: '',
@@ -24,12 +19,6 @@ const AuthForm = ({ isSignUp }) => {
 	})
 
 	const [errors, setErrors] = useState({
-		name: false,
-		login: false,
-		password: false,
-	})
-
-	const [isActive, setIsActive] = useState({
 		name: false,
 		login: false,
 		password: false,
@@ -55,13 +44,8 @@ const AuthForm = ({ isSignUp }) => {
 		}
 
 		setErrors(newErrors)
-
-		if (!isValid) {
-			setError(ERROR_MESSAGE)
-		} else {
-			setError('')
-		}
-
+		if (!isValid) setError('Заполните все поля')
+		else setError('')
 		return isValid
 	}
 
@@ -69,29 +53,10 @@ const AuthForm = ({ isSignUp }) => {
 		const { name, value } = e.target
 		const newFormData = { ...formData, [name]: value }
 		setFormData(newFormData)
-
-		// активируем фон, если поле корректно заполнено
-		setIsActive(prev => ({
-			...prev,
-			[name]: value.trim().length > 1,
-		}))
-
-		// Перевалидация при изменениях после первой отправки
-		if (isSubmitted) validateForm(newFormData)
+		if (isSubmitted) {
+			validateForm(newFormData)
+		}
 	}
-
-	const handleBlur = e => {
-		const { name, value } = e.target
-		setIsActive(prev => ({
-			...prev,
-			[name]: value.trim().length > 1,
-		}))
-	}
-
-	// Формируем плейсхолдеры
-	const loginPlaceholder = 'Эл. почта*'
-	const passwordPlaceholder = 'Пароль*'
-	const namePlaceholder = 'Имя*'
 
 	const handleSubmit = async e => {
 		e.preventDefault()
@@ -121,101 +86,73 @@ const AuthForm = ({ isSignUp }) => {
 		formData.password.trim()
 
 	return (
-		<div className={styles.auth__container}>
+		<div className={styles.auth}>
 			<div className={styles.auth__modal}>
 				<div className={styles.auth__wrapper}>
 					<h2 className={styles.auth__title}>
 						{isSignUp ? 'Регистрация' : 'Вход'}
 					</h2>
-					<form className={styles.auth__form} onSubmit={handleSubmit}>
-						<div className={styles.auth__input_wrapper}>
+					<form
+						className={`${styles.auth__form} ${styles.form}`}
+						onSubmit={handleSubmit}
+					>
+						<div className={styles.form__wrapper}>
 							{isSignUp && (
 								<input
+									className={styles.form__input}
 									type='text'
 									name='name'
-									placeholder={namePlaceholder}
+									placeholder='Имя'
 									value={formData.name}
 									onChange={handleChange}
-									onBlur={handleBlur}
-									className={[
-										styles.auth__input,
-										errors.name ? styles.auth__input_error : '',
-									].join(' ')}
-									style={
-										isActive.name && !errors.name
-											? {
-													background: ACTIVE_BG_COLOR,
-													border: `1.5px solid ${ACTIVE_BORDER_COLOR}`,
-												}
-											: {}
-									}
+									// $error={errors.name}
 								/>
 							)}
 							<input
+								className={styles.form__input}
 								type='text'
 								name='login'
-								placeholder={loginPlaceholder}
+								placeholder='Эл. почта'
 								value={formData.login}
 								onChange={handleChange}
-								onBlur={handleBlur}
-								className={[
-									styles.auth__input,
-									errors.login ? styles.auth__input_error : '',
-								].join(' ')}
-								style={
-									isActive.login && !errors.login
-										? {
-												background: ACTIVE_BG_COLOR,
-												border: `1.5px solid ${ACTIVE_BORDER_COLOR}`,
-											}
-										: {}
-								}
+								// $error={errors.login}
 							/>
 							<input
+								className={styles.form__input}
 								type='password'
 								name='password'
-								placeholder={passwordPlaceholder}
+								placeholder='Пароль'
 								value={formData.password}
 								onChange={handleChange}
-								onBlur={handleBlur}
-								className={[
-									styles.auth__input,
-									errors.password ? styles.auth__input_error : '',
-								].join(' ')}
-								style={
-									isActive.password && !errors.password
-										? {
-												background: ACTIVE_BG_COLOR,
-												border: `1.5px solid ${ACTIVE_BORDER_COLOR}`,
-											}
-										: {}
-								}
+								// $error={errors.password}
 							/>
 						</div>
-						{/* Ошибка только при невалидности после попытки отправки */}
-						{isSubmitted && error && (
-							<p className={styles.auth__error_text}>{error}</p>
-						)}
-						<button
-							className={styles.auth__button}
+						<p style={{ color: 'red', minHeight: '18px' }}>{error}</p>
+						<Button
+							variant='primary'
+							className={styles.form__button}
 							type='submit'
-							disabled={!!error || loading}
+							// loading={loading}
+							disabled={!isFormValid || loading}
 						>
 							{isSignUp ? 'Зарегистрироваться' : 'Войти'}
-						</button>
+						</Button>
+
 						{!isSignUp && (
-							<div className={styles.auth__group}>
-								<p className={styles.auth__text}>Нужно зарегистрироваться?</p>
-								<Link className={styles.auth__link} to='/sign-up'>
-									Регистрируйтесь здесь
-								</Link>
+							<div className={styles.form__group}>
+								<p className={styles.form__text}>
+									Нужно зарегистрироваться?{' '}
+									<Link className={styles.form__link} to='/sign-up'>
+										Регистрируйтесь здесь
+									</Link>
+								</p>
 							</div>
 						)}
 						{isSignUp && (
-							<div className={styles.auth__group}>
-								<p className={styles.auth__text}>
+							<div>
+								<p className={styles.form__text}>
 									Есть аккаунт?{' '}
-									<Link className={styles.auth__link} to='/sign-in'>
+									<Link className={styles.form__link} to='/sign-in'>
 										Войдите здесь
 									</Link>
 								</p>
