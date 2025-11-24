@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { ExpenseContext } from '../../../provider/ExpenseProvider'
 import Button from '../../ui/Button/Button'
 import { Icons } from '../../ui/Icons/Icons'
@@ -36,12 +36,27 @@ const toInputDate = dateStr => {
 }
 
 export const NewExpense = ({ onBack }) => {
-	const { addExpense, loading } = useContext(ExpenseContext)
+	const {
+		addExpense,
+		editExpense,
+		editingExpense,
+		clearEditingExpense,
+		loading,
+	} = useContext(ExpenseContext)
 	const [description, setDescription] = useState('')
 	const [category, setCategory] = useState('food')
 	const [date, setDate] = useState('')
 	const [sum, setSum] = useState('')
 	const [errors, setErrors] = useState({})
+
+	useEffect(() => {
+		if (editingExpense) {
+			setDescription(editingExpense.description ?? '')
+			setCategory(editingExpense.category ?? 'food')
+			setDate(toInputDate(editingExpense.date))
+			setSum(String(editingExpense.sum ?? ''))
+		}
+	}, [editingExpense])
 
 	const resetForm = () => {
 		setDescription('')
@@ -82,10 +97,15 @@ export const NewExpense = ({ onBack }) => {
 		}
 
 		try {
-			await addExpense(payload)
+			if (editingExpense) {
+				await editExpense(editingExpense._id, payload)
+				clearEditingExpense()
+			} else {
+				await addExpense(payload)
+			}
 			resetForm()
 		} catch (error) {
-			setErrors({ form: 'Ошибка при добавлении расхода' })
+			setErrors({ form: 'Ошибка при сохранении расхода' })
 		}
 	}
 
