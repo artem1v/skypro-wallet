@@ -1,47 +1,33 @@
 import { Edit, Trash } from 'lucide-react'
-import { useContext, useMemo } from 'react'
-import { ExpenseContext } from '../../../provider/ExpenseProvider'
-import { Loader } from '../../common/Loader/Loader'
 import styles from './ExpenseTable.module.scss'
 
-const CATEGORY_LABELS = {
-	food: 'Еда',
-	transport: 'Транспорт',
-	housing: 'Жилье',
-	joy: 'Развлечения',
-	education: 'Образование',
-	others: 'Другое',
-}
-
-const toDisplayDate = iso => {
-	try {
-		return new Date(iso).toLocaleDateString('ru-RU')
-	} catch {
-		return iso
-	}
-}
-
-export const ExpenseTable = ({ loading }) => {
-	const { expenses, deleteExpense, setEditingExpense } =
-		useContext(ExpenseContext)
-
-	const rows = useMemo(
-		() => (Array.isArray(expenses) ? expenses : []),
-		[expenses]
-	)
-
-	if (loading) {
-		return (
-			<div className={styles.container}>
-				<h2 className={styles.title}>Таблица расходов</h2>
-				<Loader />
-			</div>
-		)
-	}
-
+const ExpenseTable = ({ expenses, onDeleteExpense }) => {
 	return (
 		<div className={styles.container}>
 			<h2 className={styles.title}>Таблица расходов</h2>
+
+			<div className={styles.filters}>
+				<div className={styles.filterGroup}>
+					<span>Фильтровать по категории</span>
+					<select className={styles.select}>
+						<option value='all'>Все</option>
+						<option value='food'>Еда</option>
+						<option value='transport'>Транспорт</option>
+						<option value='housing'>Жилье</option>
+						<option value='entertainment'>Развлечения</option>
+						<option value='education'>Образование</option>
+						<option value='other'>Другое</option>
+					</select>
+				</div>
+				<div className={styles.filterGroup}>
+					<span>Сортировать по</span>
+					<select className={styles.select}>
+						<option value='date'>Дата</option>
+						<option value='amount'>Сумма</option>
+					</select>
+				</div>
+			</div>
+
 			<div className={styles.tableContainer}>
 				<table className={styles.table}>
 					<thead>
@@ -54,28 +40,21 @@ export const ExpenseTable = ({ loading }) => {
 						</tr>
 					</thead>
 					<tbody>
-						{rows.map(expense => (
-							<tr key={expense._id} className={styles.tr}>
+						{expenses.map((expense, index) => (
+							<tr key={index} className={styles.tr}>
 								<td className={styles.td}>{expense.description}</td>
-								<td className={styles.td}>
-									{CATEGORY_LABELS[expense.category] ?? expense.category}
-								</td>
-								<td className={styles.td}>{toDisplayDate(expense.date)}</td>
-								<td className={styles.td}>{expense.sum} ₽</td>
+								<td className={styles.td}>{expense.category}</td>
+								<td className={styles.td}>{expense.date}</td>
+								<td className={styles.td}>{expense.amount} ₽</td>
 								<td className={styles.td}>
 									<div className={styles.actions}>
 										<button
-											onClick={() => deleteExpense(expense._id)}
+											onClick={() => onDeleteExpense(index)}
 											className={styles.actionButton}
-											title='Удалить'
 										>
 											<Trash size={16} />
 										</button>
-										<button
-											onClick={() => setEditingExpense(expense)}
-											className={styles.actionButton}
-											title='Редактировать'
-										>
+										<button className={styles.actionButton}>
 											<Edit size={16} />
 										</button>
 									</div>
@@ -88,3 +67,5 @@ export const ExpenseTable = ({ loading }) => {
 		</div>
 	)
 }
+
+export default ExpenseTable

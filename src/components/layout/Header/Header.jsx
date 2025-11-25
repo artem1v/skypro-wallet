@@ -1,31 +1,15 @@
-import { useContext, useState } from 'react'
-import { Link } from 'react-router-dom'
-import { AuthContext } from '../../../provider/AuthProvider'
-import { LogOut } from '../../Modals/LogOut/LogOut'
 import styles from './Header.module.scss'
 
-export const Header = () => {
-	const { updateUserInfo } = useContext(AuthContext)
-	const [isLogoutOpen, setIsLogoutOpen] = useState(false)
+function Header() {
 	return (
 		<header className={styles.header}>
 			<div className={styles.header__container}>
-				<Link className={styles.header__logo} to='/'>
+				<a className={styles.header__logo} href='#'>
 					<img className={styles.header__image} src='/logo.svg' alt='logo' />
-				</Link>
-				<button
-					className={styles.header__btn}
-					onClick={() => setIsLogoutOpen(true)}
-				>
-					Выйти
-				</button>
+				</a>
 			</div>
-			{isLogoutOpen && (
-				<LogOut
-					updateUserInfo={updateUserInfo}
-					onClose={() => setIsLogoutOpen(false)}
-				/>
-			)}
 		</header>
 	)
 }
+
+export default Header

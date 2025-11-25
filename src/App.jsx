@@ -1,18 +1,19 @@
+import "./App.css";
 import "./assets/styles/globals.scss";
-import AuthProvider from "./provider/AuthProvider";
-import { ExpenseProvider } from "./provider/ExpenseProvider";
-import AppRoutes from "./routes/AppRoutes";
+import Header from "./components/layout/Header/Header";
+import Main from "./components/Main/Main";
+import { BrowserRouter } from "react-router-dom";
+import { AuthProvider } from "./contexts/AuthContext/AuthProvider"; // <--- Импортируй свой провайдер
 
-function App() {
+const App = () => {
   return (
-    <div>
-      <AuthProvider>
-        <ExpenseProvider>
-          <AppRoutes />
-        </ExpenseProvider>
-      </AuthProvider>
-    </div>
+    <AuthProvider>
+      <BrowserRouter>
+        <Header />
+        <Main />
+      </BrowserRouter>
+    </AuthProvider>
   );
-}
+};
 
 export default App;
