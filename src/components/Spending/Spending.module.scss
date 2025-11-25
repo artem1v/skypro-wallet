@@ -1,13 +1,13 @@
 .title {
-  font-size: 48px;
-  font-weight: 600;
-  margin-top: 60px;
+  font-size: 32px;
+  font-weight: 700;
+  margin-top: 36px;
 }
 
 .content {
   display: flex;
   gap: 32px;
-  margin-top: 60px;
+  margin-top: 32px;
   margin-bottom: 60px;
 }
 
@@ -19,4 +19,24 @@
 
 .right {
   flex-grow: 1;
+}
+
+.switchBtn {
+  position: fixed;
+  bottom: 24px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  width: 90vw;
+  padding: 12px;
+  background: #7334ea;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 12px;
+  border: none;
+  border-radius: 6px;
+  z-index: 100;
+  display: block;
+  transition: 0.2s;
+  text-align: center;
 }
