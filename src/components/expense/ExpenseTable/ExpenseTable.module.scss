@@ -1,163 +1,116 @@
 .container {
-	background-color: white;
-	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-	padding: 32px;
-	border-radius: 30px;
-	position: relative; // Добавить!
-	grid-column: span 3 / span 3;
-	grid-row: span 5 / span 5;
-	@media (max-width: 672px) {
-		padding: 0px 16px 16px 16px;
-		border-radius: 0;
-		height: 100dvh;
-	}
+  background-color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  padding: 32px;
+  border-radius: 30px;
+  position: relative; // Добавить!
 }
 
 .title {
-	font-family: Montserrat;
-	font-weight: 700;
-	font-style: Bold;
-	font-size: 24px;
-	line-height: 100%;
-	letter-spacing: 0px;
-	padding-bottom: 32px;
+  font-family: Montserrat;
+  font-weight: 700;
+  font-style: Bold;
+  font-size: 24px;
+  line-height: 100%;
+  letter-spacing: 0px;
+  padding-bottom: 32px;
+}
+
+.filters {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.filterGroup {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.select {
+  border: 1px solid #d1d5db;
+  padding: 0.25rem;
+  border-radius: 6px;
+
+  &:focus {
+    outline: none;
+    border-color: #10b981;
+  }
 }
 
 .tableContainer {
-	padding-bottom: 32px;
+  overflow-x: auto;
+  padding-bottom: 32px;
+  margin-left: -15px;
 }
 .tableContainer::after {
-	content: '';
-	position: absolute;
-	left: 0;
-	right: 0;
-	top: 114px;
-	height: 0.5px;
-	background: $secondary-color;
-	z-index: 2;
-	@media (max-width: 672px) {
-		top: 42px;
-	}
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 114px; // Отступ от верха подогнать! (например, после заголовка и фильтров)
+  height: 1px;
+  background: #e5e7eb;
+  z-index: 2;
 }
 .table {
-	width: 100%;
-	border-collapse: collapse;
+  width: 100%;
+  border-collapse: collapse;
 }
 
 .th {
-	text-align: left;
-	padding: 0.5rem 1rem;
-	color: $secondary-color;
+  text-align: left;
+  padding: 0.5rem 1rem;
+  font-weight: 500;
+  color: #6b7280;
 
-	font-family: Montserrat;
-	font-weight: 400;
-	font-style: Regular;
-	font-size: 12px;
-	line-height: 100%;
-	letter-spacing: 0px;
-	vertical-align: middle;
-	@media (max-width: 672px) {
-		font-size: 10px;
-		max-width: 74px;
-		padding: 16px 0;
-	}
-}
-
-.hed {
-	display: grid;
-	grid-template-columns: repeat(5, 1fr);
-	grid-template-rows: repeat(1, 1fr);
-	gap: 32px;
-	@media (max-width: 672px) {
-		margin-left: -16px;
-		padding-left: 16px;
-		margin-right: -16px;
-		padding-right: 16px;
-		gap: 16px;
-		grid-template-columns: repeat(4, 1fr);
-		:nth-child(3),
-		:nth-child(4) {
-			text-align: end;
-		}
-	}
-}
-
-.bucket {
-	right: 1px;
-	align-self: center;
+  font-family: Montserrat;
+  font-weight: 400;
+  font-style: Regular;
+  font-size: 12px;
+  line-height: 100%;
+  letter-spacing: 0px;
+  vertical-align: middle;
 }
 
 .td {
-	padding: 16px;
-	font-family: Montserrat;
-	font-weight: 400;
-	font-style: Regular;
-	font-size: 12px;
-	line-height: 100%;
-	letter-spacing: 0px;
-	vertical-align: middle;
-	@media (max-width: 672px) {
-		font-size: 10px;
-		max-width: 74px;
-		padding: 16px 0;
-	}
+  padding: 0.75rem 1rem;
+
+  font-family: Montserrat;
+  font-weight: 400;
+  font-style: Regular;
+  font-size: 12px;
+  line-height: 100%;
+  letter-spacing: 0px;
+  vertical-align: middle;
 }
 
 .tr {
-	display: grid;
-	grid-template-columns: repeat(5, 1fr);
-	grid-template-rows: repeat(1, 1fr);
-	gap: 32px;
-	&:hover {
-		background-color: $primary-bg;
-		color: $primary-color;
-		transition: background-color 0.2s ease-in-out;
-	}
-	@media (max-width: 672px) {
-		margin-left: -16px;
-		padding-left: 16px;
-		margin-right: -16px;
-		padding-right: 16px;
-		gap: 16px;
-		grid-template-columns: repeat(4, 1fr);
-		:nth-child(3),
-		:nth-child(4) {
-			text-align: end;
-		}
-	}
+  &:hover {
+    background-color: #f9fafb;
+    transition: background-color 0.2s ease-in-out;
+  }
 }
 .actions {
-	display: flex;
-	align-items: center;
-	gap: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .actionButton {
-	background: none;
-	border: none;
-	cursor: pointer;
-	padding: 0.25rem;
-	border-radius: 0.25rem;
-	color: $secondary-color;
-	position: relative;
-	left: 20px;
-	&:hover {
-		color: $primary-color;
-	}
-}
-
-@media (max-width: 672px) {
-	.tr {
-		cursor: pointer;
-	}
-	.selected {
-		background: $primary-bg !important;
-		color: $primary-color;
-		transition: background 0.2s;
-	}
-
-	.actions,
-	.actionButton {
-		display: none !important;
-	}
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: 0.25rem;
+  color: #6b7280;
+  position: relative;
+  left: 20px;
+  &:hover {
+    color: #1f2937;
+    background-color: #f3f4f6;
+  }
 }
