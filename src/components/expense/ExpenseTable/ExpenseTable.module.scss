@@ -1,14 +1,21 @@
 .container {
 	background-color: white;
 	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-	padding: 1.5rem;
-	border-radius: 0.5rem;
+	padding: 32px;
+	border-radius: 30px;
+	position: relative; // Добавить!
+	grid-column: span 3 / span 3;
+	grid-row: span 5 / span 5;
 }
 
 .title {
-	font-size: 1.25rem;
-	font-weight: bold;
-	margin-bottom: 1rem;
+	font-family: Montserrat;
+	font-weight: 700;
+	font-style: Bold;
+	font-size: 24px;
+	line-height: 100%;
+	letter-spacing: 0px;
+	padding-bottom: 32px;
 }
 
 .filters {
@@ -38,8 +45,19 @@
 
 .tableContainer {
 	overflow-x: auto;
+	padding-bottom: 32px;
+	margin-left: -15px;
 }
-
+.tableContainer::after {
+	content: '';
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 114px; // Отступ от верха подогнать! (например, после заголовка и фильтров)
+	height: 1px;
+	background: #e5e7eb;
+	z-index: 2;
+}
 .table {
 	width: 100%;
 	border-collapse: collapse;
@@ -50,12 +68,26 @@
 	padding: 0.5rem 1rem;
 	font-weight: 500;
 	color: #6b7280;
-	border-bottom: 1px solid #e5e7eb;
+
+	font-family: Montserrat;
+	font-weight: 400;
+	font-style: Regular;
+	font-size: 12px;
+	line-height: 100%;
+	letter-spacing: 0px;
+	vertical-align: middle;
 }
 
 .td {
 	padding: 0.75rem 1rem;
-	border-bottom: 1px solid #f3f4f6;
+
+	font-family: Montserrat;
+	font-weight: 400;
+	font-style: Regular;
+	font-size: 12px;
+	line-height: 100%;
+	letter-spacing: 0px;
+	vertical-align: middle;
 }
 
 .tr {
@@ -64,7 +96,6 @@
 		transition: background-color 0.2s ease-in-out;
 	}
 }
-
 .actions {
 	display: flex;
 	align-items: center;
@@ -78,7 +109,8 @@
 	padding: 0.25rem;
 	border-radius: 0.25rem;
 	color: #6b7280;
-
+	position: relative;
+	left: 20px;
 	&:hover {
 		color: #1f2937;
 		background-color: #f3f4f6;
